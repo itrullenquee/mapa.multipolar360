@@ -1,15 +1,15 @@
-// app/map/layout.tsx
+// app/map/layout.tsx (Server Component)
+import React from "react"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import React from "react"
-import DashboardLayoutClient from "./DashboardLayoutClient"
 
-export default function MapLayout({ children }: { children: React.ReactNode }) {
-    const role = cookies().get("role")?.value?.toLowerCase()
+export default async function MapLayout({ children }: { children: React.ReactNode }) {
+    const cookieStore = await cookies() // 👈 antes era sync, ahora puede ser Promise
+    const role = cookieStore.get("role")?.value?.toLowerCase()
+
     if (role !== "admin") {
         redirect("/unauthorized?from=/map")
     }
 
-    // Si es admin, renderiza tu shell cliente
-    return <DashboardLayoutClient>{children}</DashboardLayoutClient>
+    return <>{children}</>
 }
