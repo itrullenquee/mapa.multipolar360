@@ -12,4 +12,5 @@ export default async function MapLayout({ children }: { children: React.ReactNod
     }
 
     return <>{children}</>
+    
 }
